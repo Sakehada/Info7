@@ -1,4 +1,4 @@
-L'application tourne sous Windows.
+L'application tourne sous Windows et Linux.
 
 Si vous utilisez window, il faut:
 - avoir installé la commande make (avec scoop par exemple)
