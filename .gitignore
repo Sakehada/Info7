@@ -2,4 +2,4 @@
 
 test.exe
 
-/obj
+obj/*
