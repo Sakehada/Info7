@@ -1,5 +1,5 @@
 L'application tourne sous Windows.
 
-Pour compiler, il faut:
+Si vous utilisez window, il faut:
 - avoir installé la commande make (avec scoop par exemple)
-- avoir installer mingw (avec scoop par exemple)
+- avoir installé MSYS2 et y avoir installer mingw64, sdl2, sdl2_image et sdl2_ttf
