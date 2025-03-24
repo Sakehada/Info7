@@ -101,7 +101,6 @@ void mouvement_balle(Ball *balle) // bouge la balle en fonction de ses parametre
 }
 
 int main(int argc, char *argv[]) {
-    cout << "1" << endl;
     World world;
     Block b;
     b = Border;

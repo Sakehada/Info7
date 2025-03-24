@@ -85,14 +85,11 @@ int getId(int x, int y, int w)
 
 void init_world_from_file(World *world, string filename)
 {
-    cout << "a" << endl;
     ifstream fic(filename.c_str());
-    cout << "b" << endl;
     if (fic)
     {
         fic >> world->width;
         fic >> world->height;
-        cout << "dim: " << world->width << " " << world->height << endl;
 
         init_world(world, world->width, world->height);
         string line;
@@ -101,10 +98,8 @@ void init_world_from_file(World *world, string filename)
             fic >> line;
             for (int k = 0; k < world->width; k++)
             {
-                cout << line[k] << " ";
                 write(world, k, i, Block(line[k]));
             }
-            cout << endl;
         }
     }
     else{
