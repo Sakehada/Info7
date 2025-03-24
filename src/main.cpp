@@ -5,11 +5,8 @@
 #include <iostream>
 #include <cmath>
 #include <random>
-#include <fstream>
-#include "../../src/window.hpp"
-#include "../../src/world.hpp"
-#include "../../src/include/SDL2/SDL.h"
-#include <fstream>
+#include "window.hpp"
+#include "world.hpp"
 
 using namespace std;
 struct Ball
@@ -36,7 +33,7 @@ void echiquier(Window *window, int lig, int col, SDL_Color couleur1, SDL_Color c
             // y= k * 1000/col
             // w= (i+1) * 600/lig
             // h=(k+1)* 1000/lig
-            if (i + k == 0 || (i + k) % 2 == 0) // on desine un rectangle si les coordonnes sont pairs
+            if (i + k == 0 or (i + k) % 2 == 0) // on desine un rectangle si les coordonnes sont pairs
             {
                 w = int(window->width / col);
                 h = int(window->height / lig);
@@ -103,13 +100,12 @@ void mouvement_balle(Ball *balle) // bouge la balle en fonction de ses parametre
     balle->y = balle->y + balle->dy;
 }
 
-int WinMain(int argc, char **argv)
-{
+int main(int argc, char *argv[]) {
+    cout << "1" << endl;
     World world;
     Block b;
     b = Border;
-    init_world(&world, 10, 11);
-    write(&world, 11, 11, b);
-    display(&world);
-    return 0;
+    init_world_from_file(&world, "./assets/map/world.dat");
+    return 0; 
 }
+

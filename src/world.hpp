@@ -11,7 +11,6 @@ enum Block
     Type1,
     Type2,
     Lose
-
 };
 
 struct World
