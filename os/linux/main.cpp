@@ -6,8 +6,9 @@
 #include <cmath>
 #include <random>
 #include <fstream>
-#include "window.hpp"
-#include "world.hpp"
+#include "../../src/window.hpp"
+#include "../../src/world.hpp"
+#include "../../src/include/SDL2/SDL.h"
 #include <fstream>
 
 using namespace std;
