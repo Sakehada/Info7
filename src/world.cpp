@@ -97,9 +97,29 @@ void init_world_from_file(World *world, string filename)
         for (int i = 0; i < world->height; i++)
         {
             fic >> line;
+            Block b;
             for (int k = 0; k < world->width; k++)
             {
-                write(world, k, i, line[k]);
+
+                switch (line[k])
+                {
+                case '.':
+                    b = Empty;
+                    break;
+                case '#':
+                    b = Border;
+                    break;
+                case '$':
+                    b = Lose;
+                    break;
+                case '1':
+                    b = Type1;
+                    break;
+                case '2':
+                    b = Type2;
+                    break;
+                }
+                write(world, k, i, b);
             }
         }
     }

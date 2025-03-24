@@ -6,8 +6,8 @@
 #include <cmath>
 #include <random>
 #include <fstream>
-#include "window.hpp"
-#include "world.hpp"
+#include "./../../src/window.hpp"
+#include "./../../src/world.hpp"
 
 using namespace std;
 struct Ball
@@ -104,7 +104,7 @@ void mouvement_balle(Ball *balle) // bouge la balle en fonction de ses parametre
 int main(int argc, char **argv)
 {
     World world;
-    Block b;
-    b = Border;
-    init_world_from_file(&world, "world.dat");
+
+    init_world_from_file(&world, "./../../assets/map/world.dat");
+    display(&world);
 }
