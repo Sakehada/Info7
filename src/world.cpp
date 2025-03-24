@@ -77,3 +77,30 @@ void display(World *world)
     }
     cout << endl;
 }
+
+int getId(int x, int y, int w)
+{
+    return y * w + x;
+}
+
+void init_world_from_file(World *world, string filename)
+{
+
+    ifstream fic(filename.c_str());
+    if (fic)
+    {
+        fic >> world->width;
+        fic >> world->height;
+
+        init_world(world, world->width, world->height);
+        string line;
+        for (int i = 0; i < world->height; i++)
+        {
+            fic >> line;
+            for (int k = 0; k < world->width; k++)
+            {
+                write(world, k, i, line[k]);
+            }
+        }
+    }
+}

@@ -73,7 +73,7 @@ void init_window(Window *window, int width, int height, string title)
         SDL_Quit();
     }
     // Sp ́ecifie la police
-    window->sdl_font = TTF_OpenFont("./../../assets/police/VeraMono.ttf", 20);
+    window->sdl_font = TTF_OpenFont("VeraMono.ttf", 20);
     if (window->sdl_font == NULL)
     {
         cout << "Could not load font: error " << TTF_GetError() << endl;

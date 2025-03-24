@@ -6,10 +6,8 @@
 #include <cmath>
 #include <random>
 #include <fstream>
-#include "../../src/window.hpp"
-#include "../../src/world.hpp"
-#include "../../src/include/SDL2/SDL.h"
-#include <fstream>
+#include "window.hpp"
+#include "world.hpp"
 
 using namespace std;
 struct Ball
@@ -108,7 +106,5 @@ int main(int argc, char **argv)
     World world;
     Block b;
     b = Border;
-    init_world(&world, 10, 11);
-    write(&world, 11, 11, b);
-    display(&world);
+    init_world_from_file(&world, "world.dat");
 }
