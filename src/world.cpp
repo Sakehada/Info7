@@ -117,6 +117,10 @@ void init_world_from_file(World *world, string filename)
                 case '2':
                     b = Type2;
                     break;
+                default:
+                    cout << "Erreur de lecture de la map: " << line[k] << endl;
+                    return;
+                    break;
                 }
                 write(world, k, i, b);
             }
