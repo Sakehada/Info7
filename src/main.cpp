@@ -100,11 +100,10 @@ void mouvement_balle(Ball *balle) // bouge la balle en fonction de ses parametre
     balle->y = balle->y + balle->dy;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     World world;
-    Block b;
-    b = Border;
     init_world_from_file(&world, "./assets/map/world.dat");
-    return 0; 
+    display(&world);
+    return 0;
 }
-
