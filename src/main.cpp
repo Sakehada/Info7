@@ -2,7 +2,6 @@
 // Séance 1 info7
 
 // include
-#include <iostream>
 #include <cmath>
 #include <random>
 #include "window.hpp"
@@ -100,7 +99,8 @@ void mouvement_balle(Ball *balle) // bouge la balle en fonction de ses parametre
     balle->y = balle->y + balle->dy;
 }
 
-int main(int argc, char *argv[])
+
+int main(int argc, char** argv)
 {
     World world;
     init_world_from_file(&world, "./assets/map/world.dat");
