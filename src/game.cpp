@@ -37,7 +37,8 @@ void display_game(Window *window, Game *game)
         }
         draw_fill_rectangle(window, i % game->world->width * case_sizeX, i / game->world->width * case_sizeY, case_sizeX, case_sizeY);
     }
-
+    set_color(&window->foreground, &game->racket_color);
+    draw_fill_rectangle(window, case_sizeX * (game->racket_x - game->racket_half_width - 1), case_sizeY * (game->racket_y), case_sizeX * (game->racket_half_width * 2 + 1), 1 * case_sizeY);
     refresh_window(window);
     SDL_Delay(5000);
 }
