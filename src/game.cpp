@@ -11,26 +11,33 @@ void init_game(Game *game, string filename)
 }
 
 void move_ball(Game* game){
-    Block detect_x = game->world->grid[getId(game->ball_x + game->direction[0], game->ball_y, game->world->width)];
-    Block detect_y = game->world->grid[getId(game->ball_x, game->ball_y + game->direction[1], game->world->width)];
-    switch(detect_y){
+    Block* detect_x = &game->world->grid[getId(game->ball_x + game->direction[0], game->ball_y, game->world->width)];
+    Block* detect_y = &game->world->grid[getId(game->ball_x, game->ball_y + game->direction[1], game->world->width)];
+    switch(*detect_y){
         case Empty:
+            return;
+            break;
+        case Type1:         
+        case Type2:
+            game->direction[1] = -game->direction[1];
+            *detect_y = Empty;
+            if(game->direction[0] != 0 && (*detect_x == Type1 || *detect_y == Type2)){game->direction[0] = -game->direction[0]; *detect_x = Empty;}
             return;
             break;
         case Border:
             game->direction[1] = -game->direction[1];
-            if(game->direction[0] != 0 && detect_y == Border){game->direction[0] = -game->direction[0];}
+            if(game->direction[0] != 0 && *detect_x == Border){game->direction[0] = -game->direction[0]; *detect_x = Empty;}
             return;
             break;
     }
 
     game->direction[1] == 1;
 
-    if(detect_x == game->racket_x - 1){
+    if(*detect_x == game->racket_x - 1){
         game->direction[0] == -1;
         return;
     }
-    if(detect_x == game->racket_x + 1){
+    if(*detect_x == game->racket_x + 1){
         game->direction[0] == 1;
         return;
     }
