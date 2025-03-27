@@ -105,7 +105,17 @@ int main(int argc, char **argv)
     Game game;
     Window window;
     init_window(&window, 1200, 1000, "Boule");
+
     init_game(&game, "./assets/map/world.dat");
+    bool quit = 0;
+    game.racket_x = game.racket_x - 14;
     display_game(&window, &game);
+    while (!quit)
+    {
+        quit = keyboard_event(&game);
+        display_game(&window, &game);
+        SDL_Delay(10);
+    }
+
     return 0;
 }

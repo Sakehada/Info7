@@ -20,4 +20,6 @@ struct Game
 };
 void init_game(Game *game, string filename);
 void display_game(Window *window, Game *game);
+bool keyboard_event(Game *game);
+// void run(Window *window, Game *game);
 #endif
