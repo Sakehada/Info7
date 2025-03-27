@@ -1,19 +1,16 @@
 #include <iostream>
-#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
-#include "mixer.hpp"
+using namespace std;
 
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
 
-
-
-using namespace std;
+struct Mixer;
 
 struct Window
 {
-    Mixer mixer;
+    Mixer* mixer;
     SDL_Window *sdl_window;
     SDL_Renderer *sdl_renderer;
     int width;

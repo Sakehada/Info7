@@ -1,7 +1,13 @@
 #ifndef GAME_HPP
 #define GAME_HPP
-#include "world.hpp"
-#include "window.hpp"
+
+#include <iostream>
+#include <SDL2/SDL.h>
+using namespace std;
+
+struct World;
+struct Window;
+
 
 enum Statut{
     Begin,

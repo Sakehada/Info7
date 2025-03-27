@@ -1,4 +1,5 @@
 #include "window.hpp"
+#include "window_audio.hpp"
 
 void set_color(SDL_Color *dst, int r, int g, int b, int a)
 {
@@ -78,6 +79,11 @@ void init_window(Window *window, int width, int height, string title)
         cout << "Could not load font: error " << TTF_GetError() << endl;
         SDL_Quit();
     }
+
+    window->mixer = new Mixer;
+    init_audio(window->mixer);
+    play(window->mixer, Music1);
+
 }
 void close_window(Window *window)
 {

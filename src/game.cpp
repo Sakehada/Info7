@@ -1,4 +1,7 @@
 #include "game.hpp"
+#include "world.hpp"
+#include "window.hpp"
+#include "window_audio.hpp"
 struct Game;
 
 void init_game(Game *game, string filename)

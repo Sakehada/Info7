@@ -1,5 +1,6 @@
 #include "world.hpp"
 
+
 void init_world(World *world, int w, int h)
 {   // Initie la grille du monde ainsi que sa hauteur et sa largeur
     world->height = h;

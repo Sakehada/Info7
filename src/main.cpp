@@ -4,9 +4,9 @@
 // include
 #include <cmath>
 #include <random>
+#include "game.hpp"
 #include "window.hpp"
 #include "world.hpp"
-#include "game.hpp"
 
 using namespace std;
 struct Ball
