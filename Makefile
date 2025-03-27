@@ -3,7 +3,7 @@ EXE = test
 CPP = g++
 
 SDL_INC = `sdl2-config --cflags`
-SDL_LIB = `sdl2-config --libs` -lSDL2_image -lSDL2_ttf
+SDL_LIB = `sdl2-config --libs` -lSDL2_image -lSDL2_ttf -lSDL2_mixer
 
 CFLAGS = -O3 -Wall $(SDL_INC)
 LIBS = $(SDL_LIB)
