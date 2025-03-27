@@ -29,4 +29,5 @@ void init_game(Game *game, string filename);
 void display_game(Window *window, Game *game);
 void move_ball(Game* game);
 void change_statut(Statut* statut);
+void move_racket(Game* game, int d);
 #endif

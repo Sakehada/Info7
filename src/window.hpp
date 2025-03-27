@@ -29,8 +29,7 @@ void clear_window(Window *window);
 void draw_fill_rectangle(Window *window, int x, int y, int w, int h);
 void refresh_window(Window *window);
 SDL_Texture *load_image(Window *window, string image);
-void draw_texture(Window *window, SDL_Texture *texture, int x, int y,
-                  int w, int h);
+void draw_texture(Window *window, SDL_Texture *texture, int x, int y, int w, int h);
 void draw_text(Window *window, string text, int x, int y);
 
 #endif

@@ -11,21 +11,30 @@ void init_game(Game *game, string filename)
 }
 
 void move_ball(Game* game){
-    int detect_x = game->ball_x + game->direction[0];
-    int detect_y = game->ball_y + game->direction[1];
-    if(game->direction[0] == 0){
-        if(game->world->grid[getId(game->ball_x, detect_y, game->world->width)] == Border){
-            game->direction[1] = - game->direction[1];
+    Block detect_x = game->world->grid[getId(game->ball_x + game->direction[0], game->ball_y, game->world->width)];
+    Block detect_y = game->world->grid[getId(game->ball_x, game->ball_y + game->direction[1], game->world->width)];
+    switch(detect_y){
+        case Empty:
             return;
-        }
+            break;
+        case Border:
+            game->direction[1] = -game->direction[1];
+            if(game->direction[0] != 0 && detect_y == Border){game->direction[0] = -game->direction[0];}
+            return;
+            break;
+    }
+
+    game->direction[1] == 1;
+
+    if(detect_x == game->racket_x - 1){
+        game->direction[0] == -1;
         return;
     }
-    if(game->world->grid[getId(game->ball_x, detect_y, game->world->width)] == Border){
-        if(game->world->grid[getId(detect_x, game->ball_y, game->world->width)] == Border){
-            game->direction[1] = -game->direction[1];
-        }
-        game->direction[0] = -game->direction[0];
+    if(detect_x == game->racket_x + 1){
+        game->direction[0] == 1;
+        return;
     }
+
 }
 
 void change_statut(Statut* statut){
@@ -59,4 +68,10 @@ void display_game(Window *window, Game *game)
 
     refresh_window(window);
     SDL_Delay(5000);
+}
+
+void move_racket(Game* game, int d){
+    if(game->racket_x + 2 * d == Empty && game->statut == Play){
+        game->racket_x += d;
+    }
 }

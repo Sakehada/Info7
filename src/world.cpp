@@ -1,7 +1,7 @@
 #include "world.hpp"
 
 void init_world(World *world, int w, int h)
-{
+{   // Initie la grille du monde ainsi que sa hauteur et sa largeur
     world->height = h;
     world->width = w;
     world->grid = new Block[w * h];
@@ -12,14 +12,13 @@ void init_world(World *world, int w, int h)
 }
 
 void free_world(World *world)
-{
+{   // Supprime la grille du monde
     delete[] world->grid;
 }
 
 Block read(World *world, int x, int y)
-{
-
-    int i = y * world->width + x;
+{ // Affiche dans la sortie le block à l'emplacement (x;y)
+    int i = getId(x,y,world->width);
     if (i < 0 or i > world->height * world->width)
     {
         cout << "Erreur de coordonnee" << endl;
@@ -32,8 +31,8 @@ Block read(World *world, int x, int y)
 }
 
 void write(World *world, int x, int y, Block b)
-{
-    int i = y * world->width + x;
+{   // modifie le block à l'emplacement (x;y)
+    int i = getId(x,y,world->width);
     if (i < 0 or i > world->height * world->width)
     {
         cout << "Erreur de coordonnee" << endl;
@@ -46,7 +45,7 @@ void write(World *world, int x, int y, Block b)
 }
 
 void display(World *world)
-{
+{   // Affiche dans la sortie le monde actuellement chargé
     for (int i = 0; i < world->height * world->width; i++)
     {
         if (i != 0 && i % (world->width) == 0)
@@ -78,13 +77,13 @@ void display(World *world)
     cout << endl;
 }
 
-int getId(int x, int y, int w)
-{
+int getId(int x, int y, int w) 
+{   // Retourne l'id dans la grid 1D à partir de sa position x, y et de la largeur de la grid
     return y * w + x;
 }
 
-void init_world_from_file(World *world, string filename)
-{
+void init_world_from_file(World *world, string filename) 
+{   // Charge le monde à partir d'un fichier 
     ifstream fic(filename.c_str());
     if (fic)
     {
