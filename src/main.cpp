@@ -6,6 +6,7 @@
 #include <random>
 #include "window.hpp"
 #include "world.hpp"
+#include "game.hpp"
 
 using namespace std;
 struct Ball
@@ -99,11 +100,12 @@ void mouvement_balle(Ball *balle) // bouge la balle en fonction de ses parametre
     balle->y = balle->y + balle->dy;
 }
 
-
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
-    World world;
-    init_world_from_file(&world, "./assets/map/world.dat");
-    display(&world);
+    Game game;
+    Window window;
+    init_window(&window, 1200, 1000, "Boule");
+    init_game(&game, "./assets/map/world.dat");
+    display_game(&window, &game);
     return 0;
 }
