@@ -15,6 +15,8 @@ struct Game
     int racket_x;
     int racket_half_width;
     const SDL_Color racket_color = {0, 0, 250, 255};
+    int ball_x, ball_y;
+    int ball_dx, ball_dy;
 };
 void init_game(Game *game, string filename);
 void display_game(Window *window, Game *game);
