@@ -10,6 +10,42 @@ void init_game(Game *game, string filename)
     game->racket_half_width = 3;
 }
 
+void move_ball(Game* game){
+    int detect_x = game->ball_x + game->direction[0];
+    int detect_y = game->ball_y + game->direction[1];
+    if(game->direction[0] == 0){
+        if(game->world->grid[getId(game->ball_x, detect_y, game->world->width)] == Border){
+            game->direction[1] = - game->direction[1];
+            return;
+        }
+        return;
+    }
+    if(game->world->grid[getId(game->ball_x, detect_y, game->world->width)] == Border){
+        if(game->world->grid[getId(detect_x, game->ball_y, game->world->width)] == Border){
+            game->direction[1] = -game->direction[1];
+        }
+        game->direction[0] = -game->direction[0];
+    }
+}
+
+void change_statut(Statut* statut){
+    switch(*statut){
+        case Begin:
+            *statut = Play;
+            break;
+        case Play:
+            *statut = Pause;
+            break;
+        case Pause:
+            *statut = Play;
+            break;
+        case Win:
+        case GameOver:
+            *statut = Begin;
+            break;
+    }
+}
+
 void display_game(Window *window, Game *game)
 {
     clear_window(window);
@@ -17,24 +53,7 @@ void display_game(Window *window, Game *game)
     int case_sizeY = window->height / game->world->height;
     for (int i = 0; i < game->world->width * game->world->height; i++)
     {
-        switch (game->world->grid[i])
-        {
-        case Empty:
-            set_color(&window->foreground, &game->Empty);
-            break;
-        case Border:
-            set_color(&window->foreground, &game->Border);
-            break;
-        case Type1:
-            set_color(&window->foreground, &game->Type1);
-            break;
-        case Type2:
-            set_color(&window->foreground, &game->Type2);
-            break;
-        case Lose:
-            set_color(&window->foreground, &game->Lose);
-            break;
-        }
+        set_color(&window->foreground, &game->colors[game->world->grid[i]]);
         draw_fill_rectangle(window, i % game->world->width * case_sizeX, i / game->world->width * case_sizeY, case_sizeX, case_sizeY);
     }
 
