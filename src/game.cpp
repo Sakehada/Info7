@@ -53,28 +53,10 @@ void display_game(Window *window, Game *game)
     int case_sizeY = window->height / game->world->height;
     for (int i = 0; i < game->world->width * game->world->height; i++)
     {
-        switch (game->world->grid[i])
-        {
-        case Empty:
-            set_color(&window->foreground, &game->Empty);
-            break;
-        case Border:
-            set_color(&window->foreground, &game->Border);
-            break;
-        case Type1:
-            set_color(&window->foreground, &game->Type1);
-            break;
-        case Type2:
-            set_color(&window->foreground, &game->Type2);
-            break;
-        case Lose:
-            set_color(&window->foreground, &game->Lose);
-            break;
-        }
+        set_color(&window->foreground, &game->colors[game->world->grid[i]]);
         draw_fill_rectangle(window, i % game->world->width * case_sizeX, i / game->world->width * case_sizeY, case_sizeX, case_sizeY);
     }
-    set_color(&window->foreground, &game->racket_color);
-    draw_fill_rectangle(window, case_sizeX * (game->racket_x - game->racket_half_width - 1), case_sizeY * (game->racket_y), case_sizeX * (game->racket_half_width * 2 + 1), 1 * case_sizeY);
+
     refresh_window(window);
     SDL_Delay(5000);
 }
