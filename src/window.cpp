@@ -8,7 +8,7 @@ void set_color(SDL_Color *dst, int r, int g, int b, int a)
     dst->a = a;
 }
 
-void set_color(SDL_Color *dst, SDL_Color *src)
+void set_color(SDL_Color *dst, const SDL_Color *src)
 {
     dst->a = src->a;
     dst->r = src->r;

@@ -21,7 +21,7 @@ struct Window
 };
 
 void set_color(SDL_Color *dst, int r, int g, int b, int a);
-void set_color(SDL_Color *dst, SDL_Color *src);
+void set_color(SDL_Color *dst, const SDL_Color *src);
 
 void init_window(Window *window, int width, int height, string title);
 void close_window(Window *window);
