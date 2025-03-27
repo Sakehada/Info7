@@ -50,7 +50,7 @@ void refresh_window(Window *window)
 
 void init_window(Window *window, int width, int height, string title)
 {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0)
     {
 
         cerr << "Could not initialize SDL2: error " << SDL_GetError() << endl;

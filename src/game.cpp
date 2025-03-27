@@ -17,6 +17,10 @@ void move_ball(Game* game){
         case Empty:
             return;
             break;
+        case Lose:
+            game->statut = GameOver;
+            return;
+            break;
         case Type1:         
         case Type2:
             game->direction[1] = -game->direction[1];
@@ -31,14 +35,14 @@ void move_ball(Game* game){
             break;
     }
 
-    game->direction[1] == 1;
+    game->direction[1] = 1;
 
     if(*detect_x == game->racket_x - 1){
-        game->direction[0] == -1;
+        game->direction[0] = -1;
         return;
     }
     if(*detect_x == game->racket_x + 1){
-        game->direction[0] == 1;
+        game->direction[0] = 1;
         return;
     }
 

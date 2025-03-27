@@ -2,15 +2,18 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include "mixer.hpp"
 
 #ifndef WINDOW_HPP
 #define WINDOW_HPP
+
 
 
 using namespace std;
 
 struct Window
 {
+    Mixer mixer;
     SDL_Window *sdl_window;
     SDL_Renderer *sdl_renderer;
     int width;
