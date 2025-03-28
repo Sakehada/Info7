@@ -104,8 +104,8 @@ int main(int argc, char **argv)
 {
     Game game;
     Window window;
+    init_game(&game, "./assets/map/world.dat");
     init_window(&window, 1200, 1000, "Boule");
-    init_game(&window, &game, "./assets/map/world.dat");
     bool quit = 0;
     while (!quit)
     {
@@ -115,7 +115,7 @@ int main(int argc, char **argv)
                 break;
             case Play:
                 quit = keyboard_event(&game);
-                move_ball(&game);
+                move_ball(&window, &game);
                 display_game(&window, &game);
                 break;
             case GameOver:

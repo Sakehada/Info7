@@ -11,7 +11,7 @@ Music2
 };
 
 struct Mixer{  
-    const string pathes[4]{"ball.wav", "break.wav", "music1.wav", "music2.wav"};
+    const string pathes[4]{"break.wav", "ball.wav", "music1.wav", "music2.wav"};
     const ESample Effects[2]{Break, Bong};
     bool effects{true};
     const ESample Songs[2]{Music1, Music2};

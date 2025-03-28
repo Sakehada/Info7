@@ -4,12 +4,12 @@
 #include "window_audio.hpp"
 struct Game;
 
-void init_game(Window* window, Game *game, string filename)
+void init_game(Game *game, string filename)
 {
     game->world = new World;
     init_world_from_file(game->world, filename);
-    game->racket_y = window->height / (game->world->height - 2);
-    game->racket_x = window->width / 2;
+    game->racket_y = game->world->height - 2;
+    game->racket_x = game->world->width / 2;
     game->racket_half_width = 3;
     game->ball_x = game->racket_x;
     game->ball_y = game->racket_y - 1;
@@ -19,7 +19,7 @@ void init_game(Window* window, Game *game, string filename)
     game->statut = Play;
 }
 
-void move_ball(Game* game){
+void move_ball(Window* window, Game* game){
     Block* detect_y = &game->world->grid[getId(game->ball_x, game->ball_y + game->ball_dy, game->world->width)];
     Block* detect_x = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y, game->world->width)];
     switch(*detect_y){
@@ -32,11 +32,13 @@ void move_ball(Game* game){
         case Type1:         
         case Type2:
             game->ball_dy = -game->ball_dy;
-            *detect_y = Empty;         
+            *detect_y = Empty; 
+            play(window->mixer, Break, 500);   
             if(game->ball_dx != 0 && (*detect_x == Type1 || *detect_y == Type2)){game->ball_dx = -game->ball_dx; *detect_x = Empty;}
             return;
             break;
         case Border:
+            play(window->mixer, Bong, 500);   
             game->ball_dy = -game->ball_dy;
             if(game->ball_dx != 0 && *detect_x != Empty){game->ball_dx = -game->ball_dx;}
             return;

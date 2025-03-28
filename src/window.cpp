@@ -82,7 +82,7 @@ void init_window(Window *window, int width, int height, string title)
 
     window->mixer = new Mixer;
     init_audio(window->mixer);
-    play(window->mixer, Music1);
+    //play(window->mixer, Music1);
 
 }
 void close_window(Window *window)

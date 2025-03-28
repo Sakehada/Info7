@@ -30,9 +30,9 @@ struct Game
     int ball_x, ball_y;
     int ball_dx, ball_dy;
 };
-void init_game(Window* window, Game *game, string filename);
+void init_game(Game *game, string filename);
 void display_game(Window *window, Game *game);
-void move_ball(Game* game);
+void move_ball(Window *window, Game* game);
 void change_statut(Statut* statut);
 void move_racket(Game* game, int d);
 bool keyboard_event(Game *game);
