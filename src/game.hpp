@@ -21,7 +21,6 @@ struct Game
 {
     World *world;
     Statut statut{Begin};
-    int direction[2];
     const SDL_Color colors[5] = {{0, 0, 0, 255}, {190, 190, 190, 255}, {0, 0, 190, 255}, {255, 0, 0, 255}, {0, 255, 0, 255}};
     int racket_y;
     int racket_x;
@@ -31,7 +30,7 @@ struct Game
     int ball_x, ball_y;
     int ball_dx, ball_dy;
 };
-void init_game(Game *game, string filename);
+void init_game(Window* window, Game *game, string filename);
 void display_game(Window *window, Game *game);
 void move_ball(Game* game);
 void change_statut(Statut* statut);

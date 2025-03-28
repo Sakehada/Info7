@@ -105,15 +105,28 @@ int main(int argc, char **argv)
     Game game;
     Window window;
     init_window(&window, 1200, 1000, "Boule");
-    init_game(&game, "./assets/map/world.dat");
+    init_game(&window, &game, "./assets/map/world.dat");
     bool quit = 0;
-    game.racket_x = game.racket_x - 14;
-    display_game(&window, &game);
     while (!quit)
     {
-        quit = keyboard_event(&game);
-        display_game(&window, &game);
-        SDL_Delay(10);
+        switch(game.statut){
+            case Pause:
+                quit = keyboard_event(&game);
+                break;
+            case Play:
+                quit = keyboard_event(&game);
+                move_ball(&game);
+                display_game(&window, &game);
+                break;
+            case GameOver:
+                cout << "Partie perdue!" << endl;
+                return 0;
+                break;
+            default:
+                break;
+        }
+        
+        SDL_Delay(100 - game.ball_speed);
     }
     return 0;
 }
