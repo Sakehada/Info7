@@ -64,12 +64,12 @@ void move_ball(Window *window, Game *game)
         else if (game->racket_x == game->ball_x - 1)
         {
             game->ball_dy = -1;
-            game->ball_dx = -1;
+            game->ball_dx = 1;
         }
         else if (game->racket_x == game->ball_x + 1)
         {
             game->ball_dy = -1;
-            game->ball_dx = 1;
+            game->ball_dx = -1;
         }
     }
 
