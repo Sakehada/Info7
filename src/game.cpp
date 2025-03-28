@@ -89,3 +89,33 @@ void move_racket(Game* game, int d){
         game->racket_x += d;
     }
 }
+
+bool keyboard_event(Game *game)
+{
+    SDL_Event event;
+    while (SDL_PollEvent(&event) != 0)
+    {
+        if (event.type == SDL_KEYDOWN)
+        {
+            SDL_KeyboardEvent key_event = event.key;
+            switch (key_event.keysym.sym)
+            {
+            case SDLK_q:
+                cout << "q" << endl;
+                return true;
+            case SDLK_r:
+                cout << "r" << endl;
+                return false;
+            case SDLK_SPACE:
+                cout << "Espace" << endl;
+                return false;
+            case SDLK_RIGHT:
+                cout << "Right" << endl;
+                return false;
+            case SDLK_LEFT:
+                cout << "Left" << endl;
+                return false;
+            }
+        }
+    }
+}
