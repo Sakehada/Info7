@@ -109,23 +109,46 @@ int main(int argc, char **argv)
     bool quit = 0;
     while (!quit)
     {
-        switch(game.statut){
-            case Pause:
-                quit = keyboard_event(&game);
-                break;
-            case Play:
-                quit = keyboard_event(&game);
-                move_ball(&window, &game);
-                display_game(&window, &game);
-                break;
-            case GameOver:
-                cout << "Partie perdue!" << endl;
-                return 0;
-                break;
-            default:
-                break;
+        switch (game.statut)
+        {
+        case Begin:
+            game.ball_y = game.racket_y - 1;
+            quit = keyboard_event(&game);
+            display_game(&window, &game);
+            break;
+        case Pause:
+            quit = keyboard_event(&game);
+            display_game(&window, &game);
+            break;
+        case Play:
+            quit = keyboard_event(&game);
+            move_ball(&window, &game);
+            display_game(&window, &game);
+            break;
+        case GameOver:
+
+            // display_game(&window, &game);
+            set_color(&window.foreground, 250, 0, 0, 250);
+            set_color(&window.background, 0, 0, 0, 250);
+            draw_text(&window, "Partie perdu", window.width / 2, window.height / 2);
+            draw_text(&window, "Q pour quitter", window.width / 2, (window.height + window.height / 10) / 2);
+            draw_text(&window, "R pour reset", window.width / 2, (window.height + window.height / 5) / 2);
+            refresh_window(&window);
+            quit = keyboard_event(&game);
+            break;
+        case Win:
+            set_color(&window.foreground, 0, 250, 0, 250);
+            set_color(&window.background, 0, 0, 0, 250);
+            draw_text(&window, "Partie gagne", window.width / 2, window.height / 2);
+            draw_text(&window, "Q pour quitter", window.width / 2, (window.height + window.height / 10) / 2);
+            draw_text(&window, "R pour reset", window.width / 2, (window.height + window.height / 5) / 2);
+            refresh_window(&window);
+            quit = keyboard_event(&game);
+            break;
+        default:
+            break;
         }
-        
+
         SDL_Delay(100 - game.ball_speed);
     }
     return 0;
