@@ -29,28 +29,36 @@ void move_ball(Window *window, Game *game)
         break;
     case Lose:
         game->statut = GameOver;
-        return;
         break;
     case Type1:
-
     case Type2:
         game->ball_dy = -game->ball_dy;
         *detect_y = Empty;
         play(window->mixer, Break, 500);
-        if (game->ball_dx != 0 && (*detect_x == Type1 || *detect_y == Type2))
-        {
-            game->ball_dx = -game->ball_dx;
-            *detect_x = Empty;
-        }
-        return;
         break;
     case Border:
         play(window->mixer, Bong, 500);
         game->ball_dy = -game->ball_dy;
-        if (game->ball_dx != 0 && *detect_x != Empty)
-        {
-            game->ball_dx = -game->ball_dx;
-        }
+        break;
+    }
+
+    switch (*detect_x)
+    {
+    case Empty:
+        break;
+    case Lose:
+        game->statut = GameOver;
+        return;
+        break;
+    case Type1:
+    case Type2:
+    play(window->mixer, Break, 500);
+        game->ball_dx = -game->ball_dx;
+        return;
+        break;
+    case Border:
+        play(window->mixer, Bong, 500);
+        game->ball_dx = -game->ball_dx;
         return;
         break;
     }
