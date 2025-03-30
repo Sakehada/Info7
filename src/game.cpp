@@ -13,7 +13,7 @@ void init_game(Game *game, string filename)
     game->racket_half_width = 3;
     game->ball_x = game->racket_x;
     game->ball_y = game->racket_y - 1;
-    game->ball_speed = 1;
+    game->ball_speed = 80;
     game->ball_dx = 0;
     game->ball_dy = -1;
     game->statut = Begin;

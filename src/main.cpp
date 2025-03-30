@@ -108,6 +108,8 @@ int main(int argc, char **argv)
     init_game(&game, pathMap);
     init_window(&window, 1200, 1000, "Boule");
     bool quit = 0;
+    int speedRatio = 5; // ratio entre la vitesse de la raquette et celle de la balle
+    int i = 0;
     while (!quit)
     {
         if (game.score == game.scrWin)
@@ -127,7 +129,7 @@ int main(int argc, char **argv)
             break;
         case Play:
             quit = keyboard_event(&game, pathMap);
-            move_ball(&window, &game);
+            if(! (i % speedRatio)){ move_ball(&window, &game); i = 1;}        
             display_game(&window, &game);
             break;
         case GameOver:
@@ -152,6 +154,7 @@ int main(int argc, char **argv)
             break;
         }
 
+        i++;
         SDL_Delay(100 - game.ball_speed);
     }
     return 0;
