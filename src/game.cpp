@@ -17,6 +17,22 @@ void init_game(Game *game, string filename)
     game->ball_dx = 0;
     game->ball_dy = -1;
     game->statut = Begin;
+    game->score = 0;
+    game->scrWin = 0;
+    for (int i = 0; i < game->world->height * game->world->width; i++)
+    {
+        switch (game->world->grid[i])
+        {
+        case Type1:
+            game->scrWin = game->scrWin + 1;
+            break;
+        case Type2:
+            game->scrWin = game->scrWin + 2;
+            break;
+        default:
+            break;
+        }
+    }
 }
 
 void move_ball(Window *window, Game *game)
@@ -32,8 +48,6 @@ void move_ball(Window *window, Game *game)
         return;
         break;
     case Type1:
-
-    case Type2:
         game->ball_dy = -game->ball_dy;
         *detect_y = Empty;
         play(window->mixer, Break, 500);
@@ -42,6 +56,21 @@ void move_ball(Window *window, Game *game)
             game->ball_dx = -game->ball_dx;
             *detect_x = Empty;
         }
+        game->score = game->score + 1;
+        cout << game->score;
+        return;
+        break;
+    case Type2:
+        game->ball_dy = -game->ball_dy;
+        *detect_y = Type1;
+        play(window->mixer, Break, 500);
+        if (game->ball_dx != 0 && (*detect_x == Type1 || *detect_y == Type2))
+        {
+            game->ball_dx = -game->ball_dx;
+            *detect_x = Type1;
+        }
+        game->score = game->score + 1;
+        cout << game->score;
         return;
         break;
     case Border:
@@ -103,10 +132,13 @@ void display_game(Window *window, Game *game)
     clear_window(window);
     int case_sizeX = window->width / game->world->width;
     int case_sizeY = window->height / game->world->height;
+
     for (int i = 0; i < game->world->width * game->world->height; i++)
     {
+        set_color(&window->foreground, 0, 0, 0, 255);
+        draw_fill_rectangle(window, (i % game->world->width * case_sizeX), (i / game->world->width * case_sizeY), case_sizeX, case_sizeY);
         set_color(&window->foreground, &game->colors[game->world->grid[i]]);
-        draw_fill_rectangle(window, i % game->world->width * case_sizeX, i / game->world->width * case_sizeY, case_sizeX, case_sizeY);
+        draw_fill_rectangle(window, (i % game->world->width * case_sizeX) - 1, (i / game->world->width * case_sizeY) - 1, case_sizeX - 1, case_sizeY - 1);
     }
 
     set_color(&window->foreground, 0, 0, 200, 255);
@@ -118,7 +150,10 @@ void display_game(Window *window, Game *game)
 
     set_color(&window->foreground, 200, 200, 200, 255);
     draw_fill_rectangle(window, game->ball_x * case_sizeX, game->ball_y * case_sizeY, case_sizeX, case_sizeY);
-
+    set_color(&window->foreground, 0, 0, 0, 255);
+    set_color(&window->background, 255, 255, 255, 255);
+    string scr = "Score:" + to_string(game->score);
+    draw_text(window, scr, 0, 0);
     refresh_window(window);
 }
 
@@ -144,7 +179,7 @@ void move_racket(Game *game, int d) // Mouvement de la raquette
     }
 }
 
-bool keyboard_event(Game *game) // regarde les actions du clavier
+bool keyboard_event(Game *game, string pathMap) // regarde les actions du clavier
 {
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0)
@@ -160,7 +195,7 @@ bool keyboard_event(Game *game) // regarde les actions du clavier
             case SDLK_r: // reset
                 cout << "Reset" << endl;
                 game->statut = Pause;
-                init_game(game, "./assets/map/world.dat");
+                init_game(game, pathMap);
                 return false;
             case SDLK_SPACE: // Pause
                 change_statut(&(game->statut));
