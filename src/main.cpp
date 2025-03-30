@@ -102,39 +102,42 @@ void mouvement_balle(Ball *balle) // bouge la balle en fonction de ses parametre
 
 int main(int argc, char **argv)
 {
+    string pathMap = "./assets/map/world2.dat";
     Game game;
     Window window;
-    init_game(&game, "./assets/map/world.dat");
+    init_game(&game, pathMap);
     init_window(&window, 1200, 1000, "Boule");
     bool quit = 0;
     while (!quit)
     {
+        if (game.score == game.scrWin)
+        {
+            game.statut = Win;
+        }
         switch (game.statut)
         {
         case Begin:
             game.ball_y = game.racket_y - 1;
-            quit = keyboard_event(&game);
+            quit = keyboard_event(&game, pathMap);
             display_game(&window, &game);
             break;
         case Pause:
-            quit = keyboard_event(&game);
+            quit = keyboard_event(&game, pathMap);
             display_game(&window, &game);
             break;
         case Play:
-            quit = keyboard_event(&game);
+            quit = keyboard_event(&game, pathMap);
             move_ball(&window, &game);
             display_game(&window, &game);
             break;
         case GameOver:
-
-            // display_game(&window, &game);
             set_color(&window.foreground, 250, 0, 0, 250);
             set_color(&window.background, 0, 0, 0, 250);
             draw_text(&window, "Partie perdu", window.width / 2, window.height / 2);
             draw_text(&window, "Q pour quitter", window.width / 2, (window.height + window.height / 10) / 2);
             draw_text(&window, "R pour reset", window.width / 2, (window.height + window.height / 5) / 2);
             refresh_window(&window);
-            quit = keyboard_event(&game);
+            quit = keyboard_event(&game, pathMap);
             break;
         case Win:
             set_color(&window.foreground, 0, 250, 0, 250);
@@ -143,7 +146,7 @@ int main(int argc, char **argv)
             draw_text(&window, "Q pour quitter", window.width / 2, (window.height + window.height / 10) / 2);
             draw_text(&window, "R pour reset", window.width / 2, (window.height + window.height / 5) / 2);
             refresh_window(&window);
-            quit = keyboard_event(&game);
+            quit = keyboard_event(&game, pathMap);
             break;
         default:
             break;
