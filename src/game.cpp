@@ -49,13 +49,13 @@ void move_ball(Window *window, Game *game)
     case Type1:
         game->ball_dy = -game->ball_dy;
         *detect_y = Empty;
-        play(window->mixer, Break, 500);
+        play(window->mixer, Break, 1500);
         game->score = game->score + 1;
         break;
     case Type2:
         game->ball_dy = -game->ball_dy;
         *detect_y = Type1;
-        play(window->mixer, Break, 500);
+        play(window->mixer, Break, 1500);
         game->score = game->score + 1;
         break;
     case Border:

@@ -102,7 +102,7 @@ void mouvement_balle(Ball *balle) // bouge la balle en fonction de ses parametre
 
 int main(int argc, char **argv)
 {
-    string pathMap = "./assets/map/world2.dat";
+    string pathMap = "./assets/map/world.dat";
     Game game;
     Window window;
     init_game(&game, pathMap);
