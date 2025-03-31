@@ -106,7 +106,7 @@ int main(int argc, char **argv)
     Game game;
     Window window;
     init_game(&game, pathMap);
-    init_window(&window, 1200, 1000, "Boule");
+    init_window(&window, 800, 600, "Boule");
     bool quit = 0;
     int speedRatio = 5; // ratio entre la vitesse de la raquette et celle de la balle
     int i = 0;

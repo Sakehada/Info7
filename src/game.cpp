@@ -10,7 +10,7 @@ void init_game(Game *game, string filename)
     init_world_from_file(game->world, filename);
     game->racket_y = game->world->height - 2;
     game->racket_x = game->world->width / 2;
-    game->racket_half_width = 3;
+    game->racket_half_width = 2;
     game->ball_x = game->racket_x;
     game->ball_y = game->racket_y - 1;
     game->ball_speed = 80;
@@ -40,26 +40,31 @@ void move_ball(Window *window, Game *game)
     Block *detect_y = &game->world->grid[getId(game->ball_x, game->ball_y + game->ball_dy, game->world->width)];
     Block *detect_x = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y, game->world->width)];
     Block *detect_xy = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y + game->ball_dy, game->world->width)];
+    bool diagTest = true;
     switch (*detect_y)
     {
     case Empty:
         break;
     case Lose:
+        diagTest = false;
         game->statut = GameOver;
         break;
     case Type1:
+        diagTest = false;
         game->ball_dy = -game->ball_dy;
         *detect_y = Empty;
         play(window->mixer, Break, 1500);
         game->score = game->score + 1;
         break;
     case Type2:
+        diagTest = false;
         game->ball_dy = -game->ball_dy;
         *detect_y = Type1;
         play(window->mixer, Break, 1500);
         game->score = game->score + 1;
         break;
     case Border:
+        diagTest = false;
         play(window->mixer, Bong, 500);
         game->ball_dy = -game->ball_dy;
         break;
@@ -70,13 +75,23 @@ void move_ball(Window *window, Game *game)
     case Empty:
         break;
     case Lose:
+        diagTest = false;
         game->statut = GameOver;
         return;
         break;
-    case Type1:
-    case Type2:
-        play(window->mixer, Break, 500);
+        case Type1:
+        diagTest = false;
         game->ball_dx = -game->ball_dx;
+        *detect_x = Empty;
+        play(window->mixer, Break, 1500);
+        game->score = game->score + 1;
+        return;
+        break;
+    case Type2:
+        diagTest = false;
+        game->ball_dx = -game->ball_dx;
+        *detect_x = Type1;
+        game->score = game->score + 1;
         return;
         break;
     case Border:
@@ -85,37 +100,52 @@ void move_ball(Window *window, Game *game)
         return;
         break;
     }
-
-    switch(*detect_xy){
-        case Empty:
-            break;
-        case Lose:
-            game->statut = GameOver;
-            return;
-            break;
-        case Type1:
-        case Type2:
-        case Border:
-            play(window->mixer, Bong, 500);
-            game->ball_dx = -game->ball_dx;
-            game->ball_dy = -game->ball_dy;
-            return;
-            break;
-
+    if(diagTest){
+        switch(*detect_xy){
+            case Empty:
+                break;
+            case Lose:
+                game->statut = GameOver;
+                return;
+                break;
+            case Type1:
+                play(window->mixer, Break, 500);
+                *detect_xy = Empty;
+                game->ball_dx = -game->ball_dx;
+                game->ball_dy = -game->ball_dy;
+                game->score = game->score + 1;
+                return;
+                break;
+            case Type2:
+                play(window->mixer, Break, 500);
+                *detect_xy = Type1;
+                game->ball_dx = -game->ball_dx;
+                game->ball_dy = -game->ball_dy;
+                game->score = game->score + 1;
+                return;
+                break;
+            case Border:
+                play(window->mixer, Bong, 500);
+                game->ball_dx = -game->ball_dx;
+                game->ball_dy = -game->ball_dy;
+                return;
+                break;
+    
+        }
+    
     }
-
     if (game->racket_y == game->ball_y + game->ball_dy)
     {
         if (game->racket_x == game->ball_x)
         {
             game->ball_dy = -1;
         }
-        else if (game->racket_x == game->ball_x - 1)
+        else if (game->racket_x == game->ball_x - 1 || game->racket_x == game->ball_x - game->racket_half_width)
         {
             game->ball_dy = -1;
             game->ball_dx = 1;
         }
-        else if (game->racket_x == game->ball_x + 1)
+        else if (game->racket_x == game->ball_x + 1 || game->racket_x == game->ball_x + game->racket_half_width)
         {
             game->ball_dy = -1;
             game->ball_dx = -1;
@@ -162,10 +192,7 @@ void display_game(Window *window, Game *game)
 
     set_color(&window->foreground, 0, 0, 200, 255);
 
-    for (int i = -1; i < 2; i++)
-    {
-        draw_fill_rectangle(window, (i + game->racket_x) * case_sizeX, game->racket_y * case_sizeY, case_sizeX, case_sizeY);
-    }
+    draw_fill_rectangle(window, (game->racket_x - game->racket_half_width) * case_sizeX, game->racket_y * case_sizeY, case_sizeX * (1+game->racket_half_width * 2), case_sizeY);
 
     set_color(&window->foreground, 200, 200, 200, 255);
     draw_fill_rectangle(window, game->ball_x * case_sizeX, game->ball_y * case_sizeY, case_sizeX, case_sizeY);
@@ -182,11 +209,11 @@ void move_racket(Game *game, int d) // Mouvement de la raquette
 
     if (game->statut == Play || game->statut == Begin)
     {
-        if (d > 0 && game->world->width > game->racket_x + d + game->racket_half_width - 1) // Si on veux aller a droite
+        if (d > 0 && game->world->width > game->racket_x + d + game->racket_half_width*2 -1) // Si on veux aller a droite
         {
             game->racket_x += d;
         }
-        else if (d < 0 && 0 < game->racket_x - d - game->racket_half_width) // Aller a gauche
+        else if (d < 0 && 0 < game->racket_x - d - game->racket_half_width*2) // Aller a gauche
 
         {
             game->racket_x += d;
