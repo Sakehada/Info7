@@ -39,6 +39,7 @@ void move_ball(Window *window, Game *game)
 {
     Block *detect_y = &game->world->grid[getId(game->ball_x, game->ball_y + game->ball_dy, game->world->width)];
     Block *detect_x = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y, game->world->width)];
+    Block *detect_xy = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y + game->ball_dy, game->world->width)];
     switch (*detect_y)
     {
     case Empty:
@@ -83,6 +84,24 @@ void move_ball(Window *window, Game *game)
         game->ball_dx = -game->ball_dx;
         return;
         break;
+    }
+
+    switch(*detect_xy){
+        case Empty:
+            break;
+        case Lose:
+            game->statut = GameOver;
+            return;
+            break;
+        case Type1:
+        case Type2:
+        case Border:
+            play(window->mixer, Bong, 500);
+            game->ball_dx = -game->ball_dx;
+            game->ball_dy = -game->ball_dy;
+            return;
+            break;
+
     }
 
     if (game->racket_y == game->ball_y + game->ball_dy)
