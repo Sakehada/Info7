@@ -17,6 +17,11 @@ void init_audio(Mixer* mixer){
     for(int i = 0; i < sampleNbr; i++){
         mixer->samples[i] = Mix_LoadWAV((audioFolder + mixer->pathes[i]).c_str());
     }
+
+    set_volume(mixer, Music1, 30);
+    set_volume(mixer, Music2, 50);
+    set_volume(mixer, Break, 90);
+    set_volume(mixer, Bong, 120);
 }
 
 void free_sample(Mix_Chunk* sample){

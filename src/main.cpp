@@ -135,7 +135,7 @@ int main(int argc, char **argv)
         case GameOver:
             set_color(&window.foreground, 250, 0, 0, 250);
             set_color(&window.background, 0, 0, 0, 250);
-            draw_text(&window, "Partie perdu", window.width / 2, window.height / 2);
+            draw_text(&window, "C'est perdu", window.width / 2, window.height / 2);
             draw_text(&window, "Q pour quitter", window.width / 2, (window.height + window.height / 10) / 2);
             draw_text(&window, "R pour reset", window.width / 2, (window.height + window.height / 5) / 2);
             refresh_window(&window);
@@ -144,7 +144,7 @@ int main(int argc, char **argv)
         case Win:
             set_color(&window.foreground, 0, 250, 0, 250);
             set_color(&window.background, 0, 0, 0, 250);
-            draw_text(&window, "Partie gagne", window.width / 2, window.height / 2);
+            draw_text(&window, "Victoire", window.width / 2, window.height / 2);
             draw_text(&window, "Q pour quitter", window.width / 2, (window.height + window.height / 10) / 2);
             draw_text(&window, "R pour reset", window.width / 2, (window.height + window.height / 5) / 2);
             refresh_window(&window);

@@ -5,7 +5,7 @@
 struct Game;
 
 void init_game(Game *game, string filename)
-{
+{ // Initie la partie, y compris le monde
     game->world = new World;
     init_world_from_file(game->world, filename);
     game->racket_y = game->world->height - 2;
@@ -19,7 +19,7 @@ void init_game(Game *game, string filename)
     game->statut = Begin;
     game->score = 0;
     game->scrWin = 0;
-    for (int i = 0; i < game->world->height * game->world->width; i++)
+    for (int i = 0; i < game->world->height * game->world->width; i++) // Comptabilise les points du monde
     {
         switch (game->world->grid[i])
         {
@@ -37,9 +37,9 @@ void init_game(Game *game, string filename)
 
 void move_ball(Window *window, Game *game)
 {
-    Block *detect_y = &game->world->grid[getId(game->ball_x, game->ball_y + game->ball_dy, game->world->width)];
-    Block *detect_x = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y, game->world->width)];
-    Block *detect_xy = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y + game->ball_dy, game->world->width)];
+    Block *detect_y = &game->world->grid[getId(game->ball_x, game->ball_y + game->ball_dy, game->world->width)]; // Block du haut ou du bas
+    Block *detect_x = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y, game->world->width)]; // Block de gauche ou de droite
+    Block *detect_xy = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y + game->ball_dy, game->world->width)]; // Block de diagonale
     bool diagTest = true;
     switch (*detect_y)
     {
@@ -53,14 +53,14 @@ void move_ball(Window *window, Game *game)
         diagTest = false;
         game->ball_dy = -game->ball_dy;
         *detect_y = Empty;
-        play(window->mixer, Break, 1500);
+        play(window->mixer, Break, 500);
         game->score = game->score + 1;
         break;
     case Type2:
         diagTest = false;
         game->ball_dy = -game->ball_dy;
         *detect_y = Type1;
-        play(window->mixer, Break, 1500);
+        play(window->mixer, Bong, 500);
         game->score = game->score + 1;
         break;
     case Border:
@@ -83,7 +83,7 @@ void move_ball(Window *window, Game *game)
         diagTest = false;
         game->ball_dx = -game->ball_dx;
         *detect_x = Empty;
-        play(window->mixer, Break, 1500);
+        play(window->mixer, Break, 500);
         game->score = game->score + 1;
         return;
         break;
@@ -91,6 +91,7 @@ void move_ball(Window *window, Game *game)
         diagTest = false;
         game->ball_dx = -game->ball_dx;
         *detect_x = Type1;
+        play(window->mixer, Bong, 500);
         game->score = game->score + 1;
         return;
         break;
@@ -117,7 +118,7 @@ void move_ball(Window *window, Game *game)
                 return;
                 break;
             case Type2:
-                play(window->mixer, Break, 500);
+                play(window->mixer, Bong, 500);
                 *detect_xy = Type1;
                 game->ball_dx = -game->ball_dx;
                 game->ball_dy = -game->ball_dy;

@@ -25,7 +25,7 @@ void close_audio(Mixer* mixer);
 
 void free_sample(Mix_Chunk* sample);
 
-void set_volume(Mix_Chunk* sample, int volume);
+void set_volume(Mixer* mixer, ESample sample, int volume);
 
 void mute_audio_type(int type);
 
