@@ -36,12 +36,12 @@ void init_game(Game *game, string filename)
 }
 
 void move_ball(Window *window, Game *game)
-{
+{ // bouge la balle
     Block *detect_y = &game->world->grid[getId(game->ball_x, game->ball_y + game->ball_dy, game->world->width)]; // Block du haut ou du bas
     Block *detect_x = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y, game->world->width)]; // Block de gauche ou de droite
     Block *detect_xy = &game->world->grid[getId(game->ball_x + game->ball_dx, game->ball_y + game->ball_dy, game->world->width)]; // Block de diagonale
     bool diagTest = true;
-    switch (*detect_y)
+    switch (*detect_y) // gestion du block y
     {
     case Empty:
         break;
@@ -70,7 +70,7 @@ void move_ball(Window *window, Game *game)
         break;
     }
 
-    switch (*detect_x)
+    switch (*detect_x) // gestion du block x
     {
     case Empty:
         break;
@@ -101,8 +101,8 @@ void move_ball(Window *window, Game *game)
         return;
         break;
     }
-    if(diagTest){
-        switch(*detect_xy){
+    if(diagTest){ // si le block x et le block y est vide, gere le block de diagonale
+        switch(*detect_xy){ // gestion du block y
             case Empty:
                 break;
             case Lose:
@@ -135,7 +135,7 @@ void move_ball(Window *window, Game *game)
         }
     
     }
-    if (game->racket_y == game->ball_y + game->ball_dy)
+    if (game->racket_y == game->ball_y + game->ball_dy) // gestion de la collision avec la raquette
     {
         if (game->racket_x == game->ball_x)
         {
@@ -158,7 +158,7 @@ void move_ball(Window *window, Game *game)
 }
 
 void change_statut(Statut *statut)
-{
+{ // change le statut du jeu en fonction du statut actuel
     switch (*statut)
     {
     case Begin:
@@ -179,7 +179,7 @@ void change_statut(Statut *statut)
 }
 
 void display_game(Window *window, Game *game)
-{
+{ // réinitialise le contenu de la fenetre, dessine la map, la balle et la raquette puis rafraichit la fenetre
     clear_window(window);
     int case_sizeX = window->width / game->world->width;
     int case_sizeY = window->height / game->world->height;
