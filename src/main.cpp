@@ -37,15 +37,15 @@ int main(int argc, char **argv)
         {
         case Begin:
             game.ball_y = game.racket_y - 1;
-            quit = keyboard_event(&game, pathMap);
+            quit = keyboard_event(&game, &window, pathMap);
             display_game(&window, &game);
             break;
         case Pause:
-            quit = keyboard_event(&game, pathMap);
+            quit = keyboard_event(&game, &window, pathMap);
             display_game(&window, &game);
             break;
         case Play:
-            quit = keyboard_event(&game, pathMap);
+            quit = keyboard_event(&game, &window, pathMap);
             if(! (i % speedRatio)){ move_ball(&window, &game); i = 1;}        
             display_game(&window, &game);
             break;
@@ -56,7 +56,7 @@ int main(int argc, char **argv)
             draw_text(&window, "Q pour quitter", window.width / 2, (window.height + window.height / 10) / 2);
             draw_text(&window, "R pour reset", window.width / 2, (window.height + window.height / 5) / 2);
             refresh_window(&window);
-            quit = keyboard_event(&game, pathMap);
+            quit = keyboard_event(&game, &window, pathMap);
             break;
         case Win:
             set_color(&window.foreground, 0, 250, 0, 250);
@@ -65,7 +65,7 @@ int main(int argc, char **argv)
             draw_text(&window, "Q pour quitter", window.width / 2, (window.height + window.height / 10) / 2);
             draw_text(&window, "R pour reset", window.width / 2, (window.height + window.height / 5) / 2);
             refresh_window(&window);
-            quit = keyboard_event(&game, pathMap);
+            quit = keyboard_event(&game, &window, pathMap);
             break;
         default:
             break;

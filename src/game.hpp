@@ -37,5 +37,5 @@ void display_game(Window *window, Game *game);
 void move_ball(Window *window, Game *game);
 void change_statut(Statut *statut);
 void move_racket(Game *game, int d);
-bool keyboard_event(Game *game, string pathMap);
+bool keyboard_event(Game *game, Window* window, string pathMap);
 #endif

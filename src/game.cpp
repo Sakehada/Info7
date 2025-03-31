@@ -227,7 +227,7 @@ void move_racket(Game *game, int d) // Mouvement de la raquette
     }
 }
 
-bool keyboard_event(Game *game, string pathMap) // regarde les actions du clavier
+bool keyboard_event(Game *game, Window* window, string pathMap) // regarde les actions du clavier
 {
     SDL_Event event;
     while (SDL_PollEvent(&event) != 0)
@@ -240,6 +240,12 @@ bool keyboard_event(Game *game, string pathMap) // regarde les actions du clavie
             case SDLK_q: // pour quitter
                 cout << "q" << endl;
                 return true;
+            case SDLK_m: // mute la musique
+                mute_audio_type(window->mixer, 1);
+                return false;
+            case SDLK_s: // mute les bruits
+                mute_audio_type(window->mixer, 0);
+                return false;
             case SDLK_r: // reset
                 cout << "Reset" << endl;
                 game->statut = Pause;
